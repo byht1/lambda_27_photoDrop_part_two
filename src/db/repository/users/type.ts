@@ -24,5 +24,5 @@ export type TUpdatePrivateFn = (
 // type TUserData = Required<TNewUsers>;
 export type TCreteUser = Pick<TUsers, 'numberVerification' | 'verificationCode' | 'phone'>;
 export type TAddVerificationData = Pick<TUsers, 'numberVerification' | 'verificationCode'>;
-export type TUpdateTokenData = Pick<TUsers, 'token'>;
+export type TUpdateTokenData = Pick<TUsers, 'token'> & Partial<TAddVerificationData>;
 export type TUpdateData = Omit<TUsers, 'id'>;

@@ -37,7 +37,11 @@ export class AuthService implements IAuthService {
     }
 
     const token = this.tokenService.createToken(userId);
-    await this.userModel.updateToken(userId, { token });
+    await this.userModel.updateToken(userId, {
+      token,
+      numberVerification: 0,
+      verificationCode: null,
+    });
 
     return { token };
   };
