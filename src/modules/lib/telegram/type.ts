@@ -2,5 +2,7 @@ export interface ITelegramBotService {
   sendVerificationCode: TSendVerificationCodeFn;
 }
 
-export type TSendVerificationCodeFn = (phoneNumber: string) => Promise<number>;
-export type TGenerateMessage = (phoneNumber: string, verificationCode: number) => string;
+export type TSendVerificationCodeFn = (...args: TArgumentsGenerateMessage) => Promise<void>;
+export type TGenerateMessage = (...args: TArgumentsGenerateMessage) => string;
+
+type TArgumentsGenerateMessage = [string, number];

@@ -9,16 +9,9 @@ export class TelegramBotService extends TelegramBot implements ITelegramBotServi
     super(getEnv('TELEGRAM_BOT_TOKEN'), { polling: true });
   }
 
-  sendVerificationCode: TSendVerificationCodeFn = async (phoneNumber) => {
-    const verificationCode = this.generateVerificationCode();
-    const message = this.generateMessage(phoneNumber, verificationCode);
+  sendVerificationCode: TSendVerificationCodeFn = async (...args) => {
+    const message = this.generateMessage(...args);
     await this.sendMessage(this.CHAT_ID, message, { parse_mode: 'HTML' });
-
-    return verificationCode;
-  };
-
-  private generateVerificationCode = (): number => {
-    return Math.floor(Math.random() * 900000) + 100000;
   };
 
   private generateMessage: TGenerateMessage = (phoneNumber, verificationCode) => {

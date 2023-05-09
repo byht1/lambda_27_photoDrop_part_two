@@ -1,5 +1,10 @@
 import { AuthService } from './auth.service';
-import { IAuthController, TSingInRoutFn, TVerifyRoutFn } from './type';
+import {
+  IAuthController,
+  TRegenerateVerificationCodeRoutFn,
+  TSingInRoutFn,
+  TVerifyRoutFn,
+} from './type';
 
 export class AuthController implements IAuthController {
   constructor(private authService = new AuthService()) {}
@@ -7,9 +12,9 @@ export class AuthController implements IAuthController {
   singIn: TSingInRoutFn = async (req, res) => {
     const { phoneNumber } = req.body;
 
-    await this.authService.singIn(phoneNumber);
+    const code = await this.authService.singIn(phoneNumber);
 
-    return res.send(phoneNumber);
+    return res.send(code);
   };
 
   verify: TVerifyRoutFn = async (req, res) => {
@@ -18,5 +23,13 @@ export class AuthController implements IAuthController {
     const token = await this.authService.verify(verifyDto);
 
     return res.json(token);
+  };
+
+  regenerateVerificationCode: TRegenerateVerificationCodeRoutFn = async (req, res) => {
+    const { phoneNumber } = req.body;
+
+    const code = await this.authService.regenerateVerificationCode(phoneNumber);
+
+    return res.send(code);
   };
 }

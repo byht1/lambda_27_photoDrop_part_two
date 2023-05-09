@@ -2,11 +2,20 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-type ToNumberEnvKey = 'PORT';
+type ToNumberEnvKey =
+  | 'PORT'
+  | 'MAX_VERIFICATION_CODE_REGENERATIONS'
+  | 'VERIFICATION_CODE_EXPIRY_TIME';
 
 type TEnvKey = 'DB_URL' | 'TELEGRAM_CHAT_ID' | 'TELEGRAM_BOT_TOKEN' | 'TOKEN_SECRET_KEY';
 
 type ResponseGetEnv<T> = T extends ToNumberEnvKey ? number : string;
+
+const envNumberToArray = [
+  'PORT',
+  'MAX_VERIFICATION_CODE_REGENERATIONS',
+  'VERIFICATION_CODE_EXPIRY_TIME',
+];
 
 export const getEnv = <T extends TEnvKey | ToNumberEnvKey>(
   envKey: T,
@@ -15,7 +24,7 @@ export const getEnv = <T extends TEnvKey | ToNumberEnvKey>(
   const value = process.env[envKey];
   const response = value ? value : defaultValue;
 
-  if (envKey === 'PORT') {
+  if (envNumberToArray.includes(envKey)) {
     return +response as ResponseGetEnv<T>;
   }
 

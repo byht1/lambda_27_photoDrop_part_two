@@ -7,8 +7,7 @@ export const users = pgTable(
     id: uuid('id').defaultRandom().primaryKey(),
     phone: varchar('phone', { length: 15 }).notNull(),
     token: varchar('token'),
-    verificationCode: integer('verification_code'),
-    numberVerification: integer('number_verification').default(0),
+    verificationToken: varchar('verification_token'),
   },
   (table) => ({
     phoneIndex: uniqueIndex('phoneIdx').on(table.phone),

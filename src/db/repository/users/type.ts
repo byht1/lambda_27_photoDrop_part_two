@@ -22,7 +22,7 @@ export type TUpdatePrivateFn = (
 ) => Promise<TUsers>;
 
 // type TUserData = Required<TNewUsers>;
-export type TCreteUser = Pick<TUsers, 'numberVerification' | 'verificationCode' | 'phone'>;
-export type TAddVerificationData = Pick<TUsers, 'numberVerification' | 'verificationCode'>;
+export type TCreteUser = Pick<TUsers, 'verificationToken' | 'phone'>;
+export type TAddVerificationData = Pick<TUsers, 'verificationToken' | 'token'>;
 export type TUpdateTokenData = Pick<TUsers, 'token'> & Partial<TAddVerificationData>;
 export type TUpdateData = Omit<TUsers, 'id'>;
