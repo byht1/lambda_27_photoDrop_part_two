@@ -1,1 +1,3 @@
 ALTER TABLE "users" ADD COLUMN "verification_token" varchar;
+
+'select "photos"."id", "photos"."first_name", CASE WHEN "user_purchases"."photo_id" IS NOT NULL THEN "photos"."original_resized_url" ELSE "photos"."watermark_resized_url", CASE WHEN "user_purchases"."photo_id" IS NOT NULL THEN "photos"."original_url" ELSE "photos"."watermark_url" from "photos" left join "user_purchases" on "user_purchases"."user_id" = $1 where "photos"."album_id" = $2'

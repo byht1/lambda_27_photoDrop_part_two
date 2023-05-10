@@ -30,4 +30,3 @@ export const getEnv = <T extends TEnvKey | ToNumberEnvKey>(
 
   return response as ResponseGetEnv<T>;
 };
-//
