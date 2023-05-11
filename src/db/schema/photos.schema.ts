@@ -17,3 +17,4 @@ export const photos = pgTable('photos', {
 
 export type TPhotos = InferModel<typeof photos>
 export type TNewPhotos = InferModel<typeof photos, 'insert'>
+export type TablePhotos = typeof photos

@@ -7,11 +7,13 @@ export class CountPagination<T> {
 
   constructor(protected table: TTable<T>) {}
 
-  protected getMaxElementsCount = async (): Promise<number> => {
+  protected getMaxElementsCount = async (limit: number): Promise<number> => {
     const [maxDBElements] = await this.db
       .select({ count: sql<number>`count(*)`.mapWith((it) => +it) })
       .from(this.table)
 
-    return maxDBElements.count
+    const maxPage = Math.ceil(maxDBElements.count / limit)
+
+    return maxPage
   }
 }

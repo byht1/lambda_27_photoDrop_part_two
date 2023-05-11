@@ -1,15 +1,18 @@
 import { TPhotos } from 'db/schema'
+import { TPaginationParams, TPaginationResponse } from '../helpers'
 
 export interface IPhotosRepository {
-  getAlbumPhotos: any
+  getAlbumPhotos: TGetAlbumPhotosFn
 }
 
 export type TGetAlbumPhotosFn = (
   albumId: string,
-  isOwner: boolean
-) => Promise<TGetAlbumPhotosResponse[]>
+  userId: string,
+  params: TPaginationParams
+) => Promise<TGetAlbumPhotosResponse>
 
-type TGetAlbumPhotosResponse = Pick<TPhotos, 'id' | 'name'> & TUrl
+type TGetAlbumPhotosDBResponse = Pick<TPhotos, 'id' | 'name'> & TUrl
+export type TGetAlbumPhotosResponse = TPaginationResponse<'photos', TGetAlbumPhotosDBResponse>
 
 type TUrl = {
   smallPhotoURL: string

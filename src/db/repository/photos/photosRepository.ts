@@ -1,12 +1,16 @@
 import { getDrizzle } from 'db/connectDB'
-import { photos, userPurchases } from 'db/schema'
+import { TablePhotos, photos, userPurchases } from 'db/schema'
 import { and, eq, sql } from 'drizzle-orm'
+import { IPhotosRepository, TGetAlbumPhotosFn } from './type'
+import { CountPagination } from '../helpers'
 
-export class PhotosRepository {
-  private db = getDrizzle()
-  private table = photos
+export class PhotosRepository extends CountPagination<TablePhotos> implements IPhotosRepository {
+  constructor() {
+    super(photos)
+  }
 
-  getAlbumPhotos = async (searchAlbumId: string, searchUserId: string) => {
+  getAlbumPhotos: TGetAlbumPhotosFn = async (searchAlbumId, searchUserId, params) => {
+    const { limit, offset } = params
     const {
       albumId,
       originalResizedUrl,
@@ -17,7 +21,8 @@ export class PhotosRepository {
       name,
     } = this.table
 
-    const photos = await this.db
+    const maxElementPromise = this.getMaxElementsCount(limit)
+    const photosPromise = this.db
       .select({
         id,
         name,
@@ -30,7 +35,11 @@ export class PhotosRepository {
         userPurchases,
         and(eq(id, userPurchases.photoId), eq(userPurchases.userId, searchUserId))
       )
+      .offset(offset)
+      .limit(limit)
 
-    return photos
+    const [photos, maxPage] = await Promise.all([photosPromise, maxElementPromise])
+
+    return { maxPage, photos }
   }
 }

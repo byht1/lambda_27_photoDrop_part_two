@@ -22,6 +22,34 @@
       "when": 1683626367761,
       "tag": "0002_icy_ezekiel_stane",
       "breakpoints": false
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1683829036138,
+      "tag": "0003_low_proemial_gods",
+      "breakpoints": false
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1683829293234,
+      "tag": "0004_clear_strong_guy",
+      "breakpoints": false
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1683829470352,
+      "tag": "0005_petite_vampiro",
+      "breakpoints": false
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1683833937412,
+      "tag": "0006_lush_vector",
+      "breakpoints": false
     }
   ]
 }

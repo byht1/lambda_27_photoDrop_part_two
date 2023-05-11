@@ -1,2 +1,2 @@
 export * from './pagination/CountPagination'
-export { TPaginationResponse } from './pagination/type'
+export { TPaginationResponse, TPaginationParams } from './pagination/type'

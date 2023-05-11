@@ -8,10 +8,9 @@ export class AlbumsRepository extends CountPagination<TableAlbums> implements IA
   }
 
   getAll: TGetAllFn = async ({ limit, offset }) => {
-    const maxElementPromise = this.getMaxElementsCount()
+    const maxElementPromise = this.getMaxElementsCount(limit)
     const albumPromise = this.db.select().from(this.table).offset(offset).limit(limit)
-    const [albums, maxElement] = await Promise.all([albumPromise, maxElementPromise])
-    const maxPage = Math.ceil(maxElement / limit)
+    const [albums, maxPage] = await Promise.all([albumPromise, maxElementPromise])
     return { maxPage, albums }
   }
 }

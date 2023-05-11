@@ -1,11 +1,10 @@
 import { TAlbums } from 'db/schema'
-import { TPaginationResponse } from '../helpers'
+import { TPaginationResponse, TPaginationParams } from '../helpers'
 
 export interface IAlbumsRepository {
   getAll: TGetAllFn
 }
 
-export type TGetAllFn = (params: TPaginationParams) => Promise<TGetAllResponse>
+export type TGetAllFn = (params: TPaginationParams) => Promise<TGetAlbumsResponse>
 
-export type TPaginationParams = { limit: number; offset: number }
-export type TGetAllResponse = TPaginationResponse<'albums', TAlbums>
+export type TGetAlbumsResponse = TPaginationResponse<'albums', TAlbums>

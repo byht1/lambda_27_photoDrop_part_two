@@ -1,6 +1,6 @@
-import { TPhotographers } from 'db/schema';
-import { Request, Response, NextFunction } from 'express';
-import { IUploadedFile } from 'middleware';
+import { TUsers } from 'db/schema'
+import { Request, Response, NextFunction } from 'express'
+import { IUploadedFile } from 'middleware'
 
 declare global {
   /**
@@ -12,8 +12,7 @@ declare global {
    * @template Query - тип query параметрів запиту
    */
   interface Req<Params = any, Body = any, Query = any> extends Request<Params, any, Body, Query> {
-    user?: TPhotographers;
-    // files?: IUploadedFile;
+    user?: TUsers
   }
   /**
    * Тип `Res` визначає тип об'єкту відповіді.
@@ -21,8 +20,8 @@ declare global {
    *
    * @template D - тип тіла відповіді
    */
-  type Res<D> = Response<D>;
-  type Next = NextFunction;
+  type Res<D> = Response<D>
+  type Next = NextFunction
   /**
    * Тип `TRouterFn` визначає тип обробника маршруту для фреймворку Express.
    * Він приймає об'єкт запиту, об'єкт відповіді та опціональний параметр `next`.
@@ -36,5 +35,5 @@ declare global {
     req: Req<P, B, Q>,
     res: Res<D>,
     next?: Next
-  ) => Promise<Res<D>>;
+  ) => Promise<Res<D>>
 }

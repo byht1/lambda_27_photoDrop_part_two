@@ -1,35 +1,44 @@
-import { AuthService } from './auth.service';
+import { AuthService } from './auth.service'
 import {
   IAuthController,
+  TBreakpointName,
+  TRegenerateSelfieRoutFn,
   TRegenerateVerificationCodeRoutFn,
   TSingInRoutFn,
   TVerifyRoutFn,
-} from './type';
+} from './type'
 
 export class AuthController implements IAuthController {
-  constructor(private authService = new AuthService()) {}
+  public breakpointName: TBreakpointName = 'auth'
+  private authService = new AuthService()
 
   singIn: TSingInRoutFn = async (req, res) => {
-    const { phoneNumber } = req.body;
+    const { phoneNumber } = req.body
 
-    const code = await this.authService.singIn(phoneNumber);
+    const code = await this.authService.singIn(phoneNumber)
 
-    return res.send(code);
-  };
+    return res.send(code)
+  }
 
   verify: TVerifyRoutFn = async (req, res) => {
-    const verifyDto = req.body;
+    const verifyDto = req.body
 
-    const token = await this.authService.verify(verifyDto);
+    const token = await this.authService.verify(verifyDto)
 
-    return res.json(token);
-  };
+    return res.json(token)
+  }
 
   regenerateVerificationCode: TRegenerateVerificationCodeRoutFn = async (req, res) => {
-    const { phoneNumber } = req.body;
+    const { phoneNumber } = req.body
 
-    const code = await this.authService.regenerateVerificationCode(phoneNumber);
+    const code = await this.authService.regenerateVerificationCode(phoneNumber)
 
-    return res.send(code);
-  };
+    return res.send(code)
+  }
+
+  addSelfie: TRegenerateSelfieRoutFn = async (req, res) => {
+    const files = req.files as Express.Multer.File[]
+    console.log('🚀  AuthController  files:', files)
+    return res
+  }
 }
