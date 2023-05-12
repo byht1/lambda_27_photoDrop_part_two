@@ -1,8 +1,12 @@
-import { getDrizzle } from 'db/connectDB'
-import { TablePhotos, photos, userPurchases } from 'db/schema'
-import { and, eq, sql } from 'drizzle-orm'
-import { IPhotosRepository, TGetAlbumPhotosFn } from './type'
-import { CountPagination } from '../helpers'
+import { TAlbums, TablePhotos, albums, photos, userPurchases } from 'db/schema'
+import { and, eq, inArray, sql } from 'drizzle-orm'
+import {
+  IPhotosRepository,
+  TGetAlbumPhotosFn,
+  TPhotosWithUser,
+  TUserAlbumsAndPhotsFn,
+} from './type'
+import { CountPagination, SQLTernaryOperator, jsonAggBuildObject } from '../helpers'
 
 export class PhotosRepository extends CountPagination<TablePhotos> implements IPhotosRepository {
   constructor() {
@@ -11,23 +15,16 @@ export class PhotosRepository extends CountPagination<TablePhotos> implements IP
 
   getAlbumPhotos: TGetAlbumPhotosFn = async (searchAlbumId, searchUserId, params) => {
     const { limit, offset } = params
-    const {
-      albumId,
-      originalResizedUrl,
-      originalUrl,
-      watermarkResizedUrl,
-      watermarkUrl,
-      id,
-      name,
-    } = this.table
+    const { albumId, id, name } = this.table
 
     const maxElementPromise = this.getMaxElementsCount(limit)
-    const photosPromise = this.db
+    const responseDBPromise = this.db
       .select({
         id,
+        album: albums,
         name,
-        smallPhotoURL: sql<string>`CASE WHEN ${userPurchases.photoId} IS NOT NULL THEN ${originalResizedUrl} ELSE ${watermarkResizedUrl} END`,
-        largePhotoURL: sql<string>`CASE WHEN ${userPurchases.photoId} IS NOT NULL THEN ${originalUrl} ELSE ${watermarkUrl} END`,
+        smallPhotoURL: this.generateSmallPhotoURL(),
+        largePhotoURL: this.generateLargePhotoURL(),
       })
       .from(this.table)
       .where(eq(albumId, searchAlbumId))
@@ -35,11 +32,51 @@ export class PhotosRepository extends CountPagination<TablePhotos> implements IP
         userPurchases,
         and(eq(id, userPurchases.photoId), eq(userPurchases.userId, searchUserId))
       )
+      .leftJoin(albums, eq(albums.id, albumId))
       .offset(offset)
       .limit(limit)
 
-    const [photos, maxPage] = await Promise.all([photosPromise, maxElementPromise])
+    const [responseDB, maxPage] = await Promise.all([responseDBPromise, maxElementPromise])
 
-    return { maxPage, photos }
+    const album = responseDB[0].album
+    const photos = responseDB.map(({ album, ...photo }) => photo)
+
+    return { maxPage, photos, album }
+  }
+
+  userAlbumsAndPhotos: TUserAlbumsAndPhotsFn = async (userId) => {
+    const { people, albumId, name, id } = this.table
+
+    const albumsAndPhotos = await this.db
+      .select({
+        photos: jsonAggBuildObject<TPhotosWithUser>({
+          id,
+          albumId,
+          name,
+          smallPhotoURL: this.generateSmallPhotoURL(),
+          largePhotoURL: this.generateLargePhotoURL(),
+        }),
+        albums: sql<TAlbums[]>`COALESCE(json_agg(DISTINCT ${albums}), '[]')`,
+      })
+      .from(this.table)
+      .where(inArray(people, [[userId]]))
+      .leftJoin(albums, eq(albums.id, albumId))
+      .leftJoin(userPurchases, and(eq(id, userPurchases.photoId), eq(userPurchases.userId, userId)))
+
+    return albumsAndPhotos[0]
+  }
+
+  private generateLargePhotoURL = () => {
+    const { originalUrl, watermarkUrl } = this.table
+    return SQLTernaryOperator<string>(userPurchases.photoId, originalUrl, watermarkUrl)
+  }
+
+  private generateSmallPhotoURL = () => {
+    const { originalResizedUrl, watermarkResizedUrl } = this.table
+    return SQLTernaryOperator<string>(
+      userPurchases.photoId,
+      originalResizedUrl,
+      watermarkResizedUrl
+    )
   }
 }

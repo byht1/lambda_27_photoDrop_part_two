@@ -1,18 +1,17 @@
+import { TUsers } from 'db/schema'
 import { TSingInDto, TVerifyDto } from './dto'
 
 // CONTROLLER_________
 export interface IAuthController {
-  breakpointName: TBreakpointName
+  readonly breakpointName: TBreakpointName
   singIn: TSingInRoutFn
   verify: TVerifyRoutFn
   regenerateVerificationCode: TRegenerateVerificationCodeRoutFn
-  addSelfie: TRegenerateSelfieRoutFn
 }
 
 export type TSingInRoutFn = TRouterFn<string, TSingInDto>
-export type TVerifyRoutFn = TRouterFn<TToken, TVerifyDto>
+export type TVerifyRoutFn = TRouterFn<TUserResponse, TVerifyDto>
 export type TRegenerateVerificationCodeRoutFn = TRouterFn<string, TSingInDto>
-export type TRegenerateSelfieRoutFn = TRouterFn<string[], void>
 
 export type TBreakpointName = 'auth'
 
@@ -21,15 +20,10 @@ export interface IAuthService {
   singIn: TSingInFn
   verify: TVerifyFn
   regenerateVerificationCode: TRegenerateVerificationCodeFn
-  // addSelfie: TRegenerateSelfieFn
 }
 
 export type TSingInFn = (phoneNumber: string) => Promise<string>
-export type TVerifyFn = (bodyRequest: TVerifyDto) => Promise<TToken>
+export type TVerifyFn = (bodyRequest: TVerifyDto) => Promise<TUserResponse>
 export type TRegenerateVerificationCodeFn = (phoneNumber: string) => Promise<string>
-export type TRegenerateSelfieFn = (
-  files: Express.Multer.File[],
-  userId: string
-) => Promise<string[]>
 
-type TToken = { token: string }
+type TUserResponse = Pick<TUsers, 'id' | 'avatar' | 'token' | 'phone'>

@@ -2,9 +2,10 @@ import { TGetAlbumPhotosResponse, TGetAlbumsResponse } from 'db/repository'
 
 // CONTROLLER _____________
 export interface IAlbumsController {
-  breakpointName: TBreakpointName
+  readonly breakpointName: TBreakpointName
   getAlbums: TGerAlbumsRoutFn
   getAlbumPhotos: TGerAlbumsPhotosRoutFn
+  userAlbumsAndPhotos: TGerUserAlbumsAndPhotosRoutFn
 }
 
 export type TGerAlbumsRoutFn = TRouterFn<TGetAlbumsResponse, void, void, TPaginationQueryParams>
@@ -14,6 +15,7 @@ export type TGerAlbumsPhotosRoutFn = TRouterFn<
   TGerAlbumsPhotos,
   TPaginationQueryParams
 >
+export type TGerUserAlbumsAndPhotosRoutFn = TRouterFn<any, void>
 
 export type TBreakpointName = 'albums'
 export type TPaginationQueryParams = { limit: number; page: number }
@@ -23,6 +25,7 @@ type TGerAlbumsPhotos = { albumId: string }
 export interface IAlbumsService {
   getAlbums: TGetAlbumsFn
   getAlbumPhotos: TGerAlbumsPhotosFn
+  userAlbumsAndPhotos: TGetUserAlbumsAndPhotosFn
 }
 
 export type TGetAlbumsFn = (query: TPaginationQueryParams) => Promise<TGetAlbumsResponse>
@@ -31,3 +34,4 @@ export type TGerAlbumsPhotosFn = (
   userId: string,
   query: TPaginationQueryParams
 ) => Promise<TGetAlbumPhotosResponse>
+export type TGetUserAlbumsAndPhotosFn = (userId: string) => Promise<any>

@@ -1,6 +1,5 @@
 import { InferModel } from 'drizzle-orm'
-import { pgTable, varchar, uuid, uniqueIndex, integer } from 'drizzle-orm/pg-core'
-import { usersSelfie } from './usersSelfie'
+import { pgTable, varchar, uuid, uniqueIndex } from 'drizzle-orm/pg-core'
 
 export const users = pgTable(
   'users',
@@ -9,7 +8,7 @@ export const users = pgTable(
     phone: varchar('phone', { length: 15 }).notNull(),
     token: varchar('token'),
     verificationToken: varchar('verification_token'),
-    avatar1: varchar('avatar1'),
+    avatar: varchar('avatar'),
   },
   (table) => ({
     phoneIndex: uniqueIndex('phoneIdx').on(table.phone),

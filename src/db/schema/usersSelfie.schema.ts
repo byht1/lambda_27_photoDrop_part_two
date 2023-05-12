@@ -11,3 +11,4 @@ export const usersSelfie = pgTable('users_selfie', {
 })
 
 export type TUsersSelfie = InferModel<typeof usersSelfie>
+export type TNewUsersSelfie = InferModel<typeof usersSelfie, 'insert'>

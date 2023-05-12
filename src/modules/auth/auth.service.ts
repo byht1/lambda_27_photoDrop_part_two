@@ -31,7 +31,7 @@ export class AuthService implements IAuthService {
   verify: TVerifyFn = async ({ code, phoneNumber }) => {
     const user = await this.userModel.getPhone(phoneNumber)
     if (!user) throw createError(400, messageError.notUser)
-    const { verificationToken, id: userId } = user
+    const { verificationToken, id: userId, avatar, phone } = user
 
     if (!verificationToken) throw createError(403, messageError.invalidVerificationCode)
 
@@ -49,7 +49,7 @@ export class AuthService implements IAuthService {
       verificationToken: null,
     })
 
-    return { token }
+    return { id: userId, token, avatar, phone }
   }
 
   regenerateVerificationCode: TRegenerateVerificationCodeFn = async (phoneNumber) => {

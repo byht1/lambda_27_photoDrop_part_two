@@ -1,5 +1,5 @@
 import { AlbumsRepository, PhotosRepository } from 'db/repository'
-import { IAlbumsService, TGerAlbumsPhotosFn, TGetAlbumsFn } from './type'
+import { IAlbumsService, TGerAlbumsPhotosFn, TGetAlbumsFn, TGetUserAlbumsAndPhotosFn } from './type'
 import { formatQueryParams } from 'helpers/formatPaginationParams'
 
 export class AlbumsService implements IAlbumsService {
@@ -17,5 +17,10 @@ export class AlbumsService implements IAlbumsService {
     const pagination = formatQueryParams(queryParams)
     const photos = await this.photosModel.getAlbumPhotos(albumId, userId, pagination)
     return photos
+  }
+
+  userAlbumsAndPhotos: TGetUserAlbumsAndPhotosFn = async (userId) => {
+    const albums = await this.photosModel.userAlbumsAndPhotos(userId)
+    return albums
   }
 }

@@ -3,6 +3,7 @@ import {
   TBreakpointName,
   TGerAlbumsPhotosRoutFn,
   TGerAlbumsRoutFn,
+  TGerUserAlbumsAndPhotosRoutFn,
 } from './type'
 import { AlbumsService } from './albums.service'
 import { createError } from 'helpers'
@@ -25,5 +26,13 @@ export class AlbumsController implements IAlbumsController {
     const photos = await this.albumsService.getAlbumPhotos(albumId, user.id, query)
 
     return res.json(photos)
+  }
+
+  userAlbumsAndPhotos: TGerUserAlbumsAndPhotosRoutFn = async (req, res) => {
+    const user = req.user
+    if (!user) throw createError(500)
+    const albums = await this.albumsService.userAlbumsAndPhotos(user.id)
+
+    return res.json(albums)
   }
 }

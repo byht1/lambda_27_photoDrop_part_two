@@ -2,7 +2,6 @@ import { AuthService } from './auth.service'
 import {
   IAuthController,
   TBreakpointName,
-  TRegenerateSelfieRoutFn,
   TRegenerateVerificationCodeRoutFn,
   TSingInRoutFn,
   TVerifyRoutFn,
@@ -23,9 +22,9 @@ export class AuthController implements IAuthController {
   verify: TVerifyRoutFn = async (req, res) => {
     const verifyDto = req.body
 
-    const token = await this.authService.verify(verifyDto)
+    const user = await this.authService.verify(verifyDto)
 
-    return res.json(token)
+    return res.json(user)
   }
 
   regenerateVerificationCode: TRegenerateVerificationCodeRoutFn = async (req, res) => {
@@ -34,11 +33,5 @@ export class AuthController implements IAuthController {
     const code = await this.authService.regenerateVerificationCode(phoneNumber)
 
     return res.send(code)
-  }
-
-  addSelfie: TRegenerateSelfieRoutFn = async (req, res) => {
-    const files = req.files as Express.Multer.File[]
-    console.log('🚀  AuthController  files:', files)
-    return res
   }
 }

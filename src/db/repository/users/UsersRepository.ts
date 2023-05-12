@@ -7,10 +7,11 @@ import {
   TGetPhoneFn,
   TUpdatePrivateFn,
   TGetByIdFn,
+  TAddSelfieFn,
+  TSetAvatarFn,
 } from './type'
 import { eq } from 'drizzle-orm'
-import { users } from 'db/schema'
-import { usersSelfie } from 'db/schema/usersSelfie'
+import { users, usersSelfie } from 'db/schema'
 
 export class UsersRepository implements IPhotosRepository {
   private db = getDrizzle()
@@ -39,6 +40,20 @@ export class UsersRepository implements IPhotosRepository {
   }
 
   updateToken: TUpdateTokenFn = async (...args) => {
+    return await this.updateUser(...args)
+  }
+
+  addSelfie: TAddSelfieFn = async (dataInsert) => {
+    const { url } = this.selfieTable
+    const { userId, url: avatar } = dataInsert[dataInsert.length - 1]
+    const URLsPromise = this.db.insert(this.selfieTable).values(dataInsert).returning({ url })
+
+    const [URLs] = await Promise.all([URLsPromise, this.updateUser(userId, { avatar })])
+
+    return URLs.map(({ url }) => url)
+  }
+
+  setAvatar: TSetAvatarFn = async (...args) => {
     return await this.updateUser(...args)
   }
 
