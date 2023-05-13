@@ -8,9 +8,9 @@ export const swaggerDocs = {
     version: '1.0.1',
   },
   servers: [
-    // {
-    //   url: 'https://lambda-27-photodrop.onrender.com',
-    // },
+    {
+      url: 'https://lambda-27-photodrop-part-two.onrender.com',
+    },
   ],
   tags: [
     {
