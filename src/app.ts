@@ -4,7 +4,7 @@ import { getEnv } from 'helpers'
 import morgan from 'morgan'
 import { INewError } from 'type'
 import { swaggerRouter } from 'swagger/router'
-import { albumsRouter, authRouter, userRouter } from 'modules'
+import { albumsRouter, authRouter, userRouter, paymentRouter } from 'modules'
 
 const PORT = getEnv('PORT', '5000')
 const app = express()
@@ -18,6 +18,7 @@ app.use(express.json())
 app.use('/api', authRouter)
 app.use('/api', albumsRouter)
 app.use('/api', userRouter)
+app.use('/api', paymentRouter)
 app.use('/', swaggerRouter)
 
 app.use((req, res) => {

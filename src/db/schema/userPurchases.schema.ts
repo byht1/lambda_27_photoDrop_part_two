@@ -1,9 +1,9 @@
 //user_purchases
 
-import { InferModel } from 'drizzle-orm';
-import { pgTable, uuid, primaryKey } from 'drizzle-orm/pg-core';
-import { photos } from './photos.schema';
-import { users } from './user.schema';
+import { InferModel } from 'drizzle-orm'
+import { pgTable, uuid, primaryKey } from 'drizzle-orm/pg-core'
+import { photos } from './photos.schema'
+import { users } from './user.schema'
 
 export const userPurchases = pgTable(
   'user_purchases',
@@ -18,7 +18,7 @@ export const userPurchases = pgTable(
   (table) => ({
     id: primaryKey(table.photoId, table.userId),
   })
-);
+)
 
-export type TUserPurchases = InferModel<typeof userPurchases>;
-export type TNewUserPurchases = InferModel<typeof userPurchases, 'insert'>;
+export type TUserPurchases = InferModel<typeof userPurchases>
+export type TNewUserPurchases = InferModel<typeof userPurchases, 'insert'>

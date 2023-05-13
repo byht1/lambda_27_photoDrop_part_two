@@ -1,3 +1,6 @@
-export * from './telegram/TelegramBot';
-export * from './token/token.service';
-export * from './verificationToken/verificationToken.service';
+export * from './telegram/TelegramBot'
+export * from './token/token.service'
+export * from './verificationToken/verificationToken.service'
+export * from './stripe/Stripe.service'
+export { TPurchasePayload, TNewPurchaseOptions } from './stripe/type/type'
+export * from './stripe/type/payment'

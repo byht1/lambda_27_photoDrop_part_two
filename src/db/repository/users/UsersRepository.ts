@@ -9,14 +9,16 @@ import {
   TGetByIdFn,
   TAddSelfieFn,
   TSetAvatarFn,
+  TAddPurchasedPhotoFn,
 } from './type'
 import { eq } from 'drizzle-orm'
-import { users, usersSelfie } from 'db/schema'
+import { userPurchases, users, usersSelfie } from 'db/schema'
 
 export class UsersRepository implements IPhotosRepository {
   private db = getDrizzle()
   private table = users
   private selfieTable = usersSelfie
+  private userPurchasesTable = userPurchases
 
   create: TCreateFn = async (userData) => {
     const user = await this.db.insert(this.table).values(userData).returning()
@@ -55,6 +57,11 @@ export class UsersRepository implements IPhotosRepository {
 
   setAvatar: TSetAvatarFn = async (...args) => {
     return await this.updateUser(...args)
+  }
+
+  addPurchasedPhoto: TAddPurchasedPhotoFn = async (data) => {
+    await this.db.insert(this.userPurchasesTable).values(data)
+    return
   }
 
   private updateUser: TUpdatePrivateFn = async (searchId, updateData) => {

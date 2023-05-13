@@ -15,6 +15,8 @@ type TEnvKey =
   | 'AWS_S3_BUCKET'
   | 'AWS_S3_ACCESS_KEY'
   | 'AWS_S3_KEY_SECRET'
+  | 'PAYMENT_SECRET_KEY'
+  | 'CLIENT_URL_SERVER_ERROR'
 
 type ResponseGetEnv<T> = T extends ToNumberEnvKey ? number : string
 

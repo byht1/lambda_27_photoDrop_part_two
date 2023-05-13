@@ -3,6 +3,7 @@ import { and, eq, inArray, sql } from 'drizzle-orm'
 import {
   IPhotosRepository,
   TGetAlbumPhotosFn,
+  TGetAllForAlbumsFn,
   TPhotosWithUser,
   TUserAlbumsAndPhotsFn,
 } from './type'
@@ -78,5 +79,14 @@ export class PhotosRepository extends CountPagination<TablePhotos> implements IP
       originalResizedUrl,
       watermarkResizedUrl
     )
+  }
+
+  getAllForAlbums: TGetAllForAlbumsFn = async (searchAlbumId) => {
+    const { albumId, id } = this.table
+    const albumsAndPhotos = await this.db
+      .select({ photoId: id })
+      .from(this.table)
+      .where(eq(albumId, searchAlbumId))
+    return albumsAndPhotos
   }
 }
