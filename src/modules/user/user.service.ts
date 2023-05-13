@@ -22,7 +22,8 @@ export class UserService implements IUserService {
     return URLs
   }
   setAvatar: TRegenerateAvatarFn = async (...args) => {
-    return await this.userModel.setAvatar(...args)
+    const user = await this.userModel.setAvatar(...args)
+    return { avatar: user.avatar || '' }
   }
 
   clearDirectory = async (dir: string) => {

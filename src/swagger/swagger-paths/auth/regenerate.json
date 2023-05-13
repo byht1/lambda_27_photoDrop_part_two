@@ -1,0 +1,32 @@
+{
+  "/api/auth/regenerate": {
+    "post": {
+      "tags": ["Auth"],
+      "summary": "Reissue the verification code",
+      "description": "Reissue the verification code. Maximized one reissue of the verification code",
+      "parameters": [
+        {
+          "$ref": "#/components/schemas/phoneNumber"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Photographers data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/verifyCode"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Server error"
+        },
+        "400": {
+          "description": "Bad request"
+        }
+      }
+    }
+  }
+}

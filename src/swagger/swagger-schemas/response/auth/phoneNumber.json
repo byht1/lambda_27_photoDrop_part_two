@@ -1,0 +1,18 @@
+{
+  "phoneNumber": {
+    "in": "body",
+    "name": "body",
+    "description": "JSON-body request",
+    "required": true,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "phoneNumber": {
+          "type": "string",
+          "example": "+380112223344"
+        }
+      },
+      "required": ["login", "password"]
+    }
+  }
+}

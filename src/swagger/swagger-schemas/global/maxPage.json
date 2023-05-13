@@ -1,0 +1,11 @@
+{
+  "maxPage": {
+    "type": "object",
+    "properties": {
+      "maxPage": {
+        "type": "integer",
+        "example": 5
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "getUserMark": {
+    "allOf": [
+      {
+        "type": "object",
+        "properties": {
+          "albums": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/photo"
+            }
+          }
+        }
+      },
+      {
+        "type": "object",
+        "properties": {
+          "photos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/photo"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

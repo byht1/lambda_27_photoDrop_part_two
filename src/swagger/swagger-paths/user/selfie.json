@@ -1,0 +1,49 @@
+{
+  "/api/user/selfie": {
+    "post": {
+      "tags": ["User"],
+      "summary": "Add selfie",
+      "description": "Add a selfie for analysis",
+      "parameters": [
+        {
+          "$ref": "#/components/schemas/authToken"
+        },
+        {
+          "name": "photos",
+          "in": "formData",
+          "description": "Photo files",
+          "required": true,
+          "type": "file"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Selfie list",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": "https://photo-drop-ambda.s3.eu-central-1.amazonaws.com/290b3489-e22c-4f06-be85-07ca9d5d62dc/original/resized/d96fa374-a4c5-4130-abe9-0cfdfb8afcdc.png"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Server error"
+        },
+        "403": {
+          "description": "Forbidden"
+        },
+        "400": {
+          "description": "Bad request"
+        }
+      }
+    }
+  }
+}

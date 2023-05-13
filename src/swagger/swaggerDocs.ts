@@ -1,5 +1,5 @@
-import { schemas } from './swagger-schemas/index';
-import { paths } from './swagger-paths/index';
+import { schemas } from './swagger-schemas/index'
+import { paths } from './swagger-paths/index'
 
 export const swaggerDocs = {
   openapi: '3.0.3',
@@ -13,15 +13,21 @@ export const swaggerDocs = {
     // },
   ],
   tags: [
-    // {
-    //   name: 'Auth',
-    // },
-    // {
-    //   name: 'Albums',
-    // },
+    {
+      name: 'Auth',
+    },
+    {
+      name: 'User',
+    },
+    {
+      name: 'Albums and photos',
+    },
+    {
+      name: 'Payment',
+    },
   ],
   paths,
   components: {
     schemas,
   },
-};
+}

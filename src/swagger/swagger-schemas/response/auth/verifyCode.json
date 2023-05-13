@@ -1,0 +1,6 @@
+{
+  "verifyCode": {
+    "type": "string",
+    "example": "123456"
+  }
+}

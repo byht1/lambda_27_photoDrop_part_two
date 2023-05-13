@@ -1,0 +1,41 @@
+{
+  "/api/albums": {
+    "get": {
+      "tags": ["Albums and photos"],
+      "summary": "Get all albums",
+      "description": "Get all albums list",
+      "parameters": [
+        {
+          "$ref": "#/components/schemas/authToken"
+        },
+        {
+          "$ref": "#/components/schemas/QueryPage"
+        },
+        {
+          "$ref": "#/components/schemas/QueryLimit"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Albums list",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getAllAlbums"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Server error"
+        },
+        "403": {
+          "description": "Forbidden"
+        },
+        "400": {
+          "description": "Bad request"
+        }
+      }
+    }
+  }
+}

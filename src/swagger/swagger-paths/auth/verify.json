@@ -1,0 +1,70 @@
+{
+  "/api/auth/verify": {
+    "post": {
+      "tags": ["Auth"],
+      "summary": "Account login confirmation (verify)",
+      "description": "Confirmation of login to the account using the code received in the message",
+      "parameters": [
+        {
+          "in": "body",
+          "name": "body",
+          "description": "JSON-body request",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "phoneNumber": {
+                "type": "string",
+                "example": "+380112223344"
+              },
+              "code": {
+                "type": "string",
+                "example": "123456"
+              }
+            },
+            "required": ["phoneNumber", "code"]
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Photographers data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed"
+                  },
+                  "token": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhYmMwMDg4LTRhNTAtNDljYy04OTE2LWE3ZjFhMjU4N2NiZSIsImlhdCI6MTY4Mzk5MjIwOSwiZXhwIjoxNjg0MDc4NjA5fQ.hI-DHmLcCmdzFtJZDPFusGjiIr9TXKu0lh7hfpYpg2Q"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "example": "https://photo-drop-ambda.s3.eu-central-1.amazonaws.com/290b3489-e22c-4f06-be85-07ca9d5d62dc/original/resized/d96fa374-a4c5-4130-abe9-0cfdfb8afcdc.png"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "+380112223344"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Server error"
+        },
+        "403": {
+          "description": "Forbidden"
+        },
+        "400": {
+          "description": "Bad request"
+        }
+      }
+    }
+  }
+}

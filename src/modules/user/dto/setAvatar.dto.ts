@@ -5,5 +5,5 @@ export type TSetAvatarDto = {
 }
 
 export const setAvatarDto = z.object({
-  phoneNumber: z.string(),
+  avatar: z.string(),
 })

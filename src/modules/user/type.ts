@@ -9,7 +9,7 @@ export interface IUserController {
 }
 
 export type TRegenerateSelfieRoutFn = TRouterFn<string[], void>
-export type TRegenerateAvatarRoutFn = TRouterFn<TUsers, TSetAvatarDto>
+export type TRegenerateAvatarRoutFn = TRouterFn<TSetAvatarResponse, TSetAvatarDto>
 
 export type TBreakpointName = 'user'
 
@@ -24,4 +24,9 @@ export type TRegenerateSelfieFn = (
   files: Express.Multer.File[],
   userId: string
 ) => Promise<string[]>
-export type TRegenerateAvatarFn = (userId: string, avatarDto: TSetAvatarDto) => Promise<TUsers>
+export type TRegenerateAvatarFn = (
+  userId: string,
+  avatarDto: TSetAvatarDto
+) => Promise<TSetAvatarResponse>
+
+type TSetAvatarResponse = { avatar: string }

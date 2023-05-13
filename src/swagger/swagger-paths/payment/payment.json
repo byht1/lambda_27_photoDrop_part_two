@@ -1,0 +1,52 @@
+{
+  "/api/payment": {
+    "post": {
+      "tags": ["Payment"],
+      "summary": "create new payment",
+      "description": "create new payment",
+      "parameters": [
+        {
+          "$ref": "#/components/schemas/authToken"
+        },
+        {
+          "in": "body",
+          "name": "body",
+          "description": "JSON-body request",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "albumId": {
+                "type": "string",
+                "example": "b6aa1eff-6f05-4531-ab9c-12c63db20279"
+              },
+              "successUrl": {
+                "type": "string",
+                "example": "http://localhost:5000/..."
+              },
+              "cancelUrl": {
+                "type": "string",
+                "example": "http://localhost:5000/..."
+              }
+            },
+            "required": ["avatar"]
+          }
+        }
+      ],
+      "responses": {
+        "303": {
+          "description": "Forwarding for payment"
+        },
+        "500": {
+          "description": "Server error"
+        },
+        "403": {
+          "description": "Forbidden"
+        },
+        "400": {
+          "description": "Bad request"
+        }
+      }
+    }
+  }
+}

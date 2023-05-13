@@ -1,0 +1,32 @@
+{
+  "/api/auth/singIn": {
+    "post": {
+      "tags": ["Auth"],
+      "summary": "Sing in and sing up",
+      "description": "Sing in and sing up authentication",
+      "parameters": [
+        {
+          "$ref": "#/components/schemas/phoneNumber"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Photographers data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/verifyCode"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Server error"
+        },
+        "400": {
+          "description": "Bad request"
+        }
+      }
+    }
+  }
+}

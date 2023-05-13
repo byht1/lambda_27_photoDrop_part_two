@@ -1,0 +1,35 @@
+{
+  "/api/albums/user/mark": {
+    "get": {
+      "tags": ["Albums and photos"],
+      "summary": "Marked user",
+      "description": "Get all photos and albums where the user is marked",
+      "parameters": [
+        {
+          "$ref": "#/components/schemas/authToken"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Get all photos and albums where the user is marked",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getUserMark"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Server error"
+        },
+        "403": {
+          "description": "Forbidden"
+        },
+        "400": {
+          "description": "Bad request"
+        }
+      }
+    }
+  }
+}

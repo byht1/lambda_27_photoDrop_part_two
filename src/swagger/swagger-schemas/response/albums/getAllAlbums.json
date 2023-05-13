@@ -1,0 +1,18 @@
+{
+  "getAllAlbums": {
+    "allOf": [
+      { "$ref": "#/components/schemas/maxPage" },
+      {
+        "type": "object",
+        "properties": {
+          "albums": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/album"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

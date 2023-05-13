@@ -1,0 +1,26 @@
+{
+  "getAlbumById": {
+    "allOf": [
+      { "$ref": "#/components/schemas/maxPage" },
+      {
+        "type": "object",
+        "properties": {
+          "album": {
+            "$ref": "#/components/schemas/album"
+          }
+        }
+      },
+      {
+        "type": "object",
+        "properties": {
+          "photos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/photo"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
