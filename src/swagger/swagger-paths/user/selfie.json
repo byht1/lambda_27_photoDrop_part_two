@@ -9,11 +9,23 @@
           "$ref": "#/components/schemas/authToken"
         },
         {
-          "name": "photos",
-          "in": "formData",
-          "description": "Photo files",
+          "in": "body",
+          "name": "body",
+          "description": "JSON-body request",
           "required": true,
-          "type": "file"
+          "schema": {
+            "type": "object",
+            "properties": {
+              "photos": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "example": "filename.png"
+                }
+              }
+            },
+            "required": ["photos"]
+          }
         }
       ],
       "responses": {
@@ -22,13 +34,10 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "example": "https://photo-drop-ambda.s3.eu-central-1.amazonaws.com/290b3489-e22c-4f06-be85-07ca9d5d62dc/original/resized/d96fa374-a4c5-4130-abe9-0cfdfb8afcdc.png"
-                  }
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "example": "https://photo-drop-ambda.s3.eu-central-1.amazonaws.com/290b3489-e22c-4f06-be85-07ca9d5d62dc/original/resized/d96fa374-a4c5-4130-abe9-0cfdfb8afcdc.png"
                 }
               }
             }

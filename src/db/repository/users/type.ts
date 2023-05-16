@@ -1,4 +1,4 @@
-import { TNewUserPurchases, TNewUsersSelfie, TUsers } from 'db/schema'
+import { TNewUserPurchases, TUsers } from 'db/schema'
 
 export interface IPhotosRepository {
   create: TCreateFn
@@ -6,7 +6,6 @@ export interface IPhotosRepository {
   getPhone: TGetPhoneFn
   addVerification: TAddVerificationFn
   updateToken: TUpdateTokenFn
-  addSelfie: TAddSelfieFn
   setAvatar: TSetAvatarFn
   addPurchasedPhoto: TAddPurchasedPhotoFn
 }
@@ -19,7 +18,6 @@ export type TAddVerificationFn = (
   verificationData: TAddVerificationData
 ) => Promise<TUsers>
 export type TUpdateTokenFn = (userId: string, token: TUpdateTokenData) => Promise<TUsers>
-export type TAddSelfieFn = (data: TNewUsersSelfie[]) => Promise<string[]>
 export type TSetAvatarFn = (userId: string, avatarUpdate: TSetAvatarData) => Promise<TUsers>
 export type TAddPurchasedPhotoFn = (data: TNewUserPurchases[]) => Promise<void>
 

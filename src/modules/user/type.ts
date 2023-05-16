@@ -1,5 +1,5 @@
-import { TUsers } from 'db/schema'
 import { TSetAvatarDto } from './dto/setAvatar.dto'
+import { TAddPhotosDto } from './dto/addSelfie.dto'
 
 // CONTROLLER __________________
 export interface IUserController {
@@ -8,7 +8,7 @@ export interface IUserController {
   setAvatar: TRegenerateAvatarRoutFn
 }
 
-export type TRegenerateSelfieRoutFn = TRouterFn<string[], void>
+export type TRegenerateSelfieRoutFn = TRouterFn<string[], TAddPhotosDto>
 export type TRegenerateAvatarRoutFn = TRouterFn<TSetAvatarResponse, TSetAvatarDto>
 
 export type TBreakpointName = 'user'
@@ -17,13 +17,9 @@ export type TBreakpointName = 'user'
 export interface IUserService {
   addSelfie: TRegenerateSelfieFn
   setAvatar: TRegenerateAvatarFn
-  clearDirectory: (dir: string) => Promise<void>
 }
 
-export type TRegenerateSelfieFn = (
-  files: Express.Multer.File[],
-  userId: string
-) => Promise<string[]>
+export type TRegenerateSelfieFn = (files: string[], userId: string) => Promise<string[]>
 export type TRegenerateAvatarFn = (
   userId: string,
   avatarDto: TSetAvatarDto

@@ -13,15 +13,10 @@ export class UserController implements IUserController {
   addSelfie: TRegenerateSelfieRoutFn = async (req, res) => {
     const user = req.user
     if (!user) throw new Error()
+    const { photos } = req.body
 
-    try {
-      const files = req.files as Express.Multer.File[]
-      const URLs = await this.userService.addSelfie(files, user.id)
-      return res.json(URLs)
-    } catch (error) {
-      await this.userService.clearDirectory(user.id)
-      throw error
-    }
+    const URLs = await this.userService.addSelfie(photos, user.id)
+    return res.json(URLs)
   }
 
   setAvatar: TRegenerateAvatarRoutFn = async (req, res) => {
