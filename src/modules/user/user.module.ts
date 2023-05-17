@@ -1,19 +1,19 @@
 import express from 'express'
 import { ctrlWrapper } from 'helpers'
-import { uploadFiles, validateToken, validate } from 'middleware'
+import { validateToken, validate } from 'middleware'
 import { UserController } from './user.controller'
-import { setAvatarDto } from './dto/setAvatar.dto'
+import { setUserDto } from './dto'
 
 const router = express.Router()
 
-const { breakpointName, addSelfie, setAvatar } = new UserController()
+const { breakpointName, addSelfie, setUserData } = new UserController()
 
-router.post(`/${breakpointName}/selfie`, validateToken, uploadFiles, ctrlWrapper(addSelfie))
 router.patch(
-  `/${breakpointName}/avatar`,
+  `/${breakpointName}`,
   validateToken,
-  validate(setAvatarDto, 'body'),
-  ctrlWrapper(setAvatar)
+  validate(setUserDto, 'body'),
+  ctrlWrapper(setUserData)
 )
+router.post(`/${breakpointName}/selfie`, validateToken, ctrlWrapper(addSelfie))
 
 export const userRouter = router

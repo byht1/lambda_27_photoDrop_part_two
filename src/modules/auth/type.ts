@@ -26,4 +26,4 @@ export type TSingInFn = (phoneNumber: string) => Promise<string>
 export type TVerifyFn = (bodyRequest: TVerifyDto) => Promise<TUserResponse>
 export type TRegenerateVerificationCodeFn = (phoneNumber: string) => Promise<string>
 
-type TUserResponse = Pick<TUsers, 'id' | 'avatar' | 'token' | 'phone'>
+type TUserResponse = Pick<TUsers, 'id' | 'avatar' | 'token' | 'phone' | 'name'>

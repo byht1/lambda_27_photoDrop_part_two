@@ -21,3 +21,21 @@ export const jsonAggBuildObject: TJsonAggBuildObject = (shape) => {
     ), '[]'
   )`
 }
+
+export const uniqJsonAggBuildObject: TJsonAggBuildObject = (shape) => {
+  const chunks: SQL[] = []
+
+  Object.entries(shape).forEach(([key, value]) => {
+    if (chunks.length > 0) {
+      chunks.push(sql.raw(`,`))
+    }
+    chunks.push(sql.raw(`'${key}',`))
+    chunks.push(sql`${value}`)
+  })
+
+  return sql`COALESCE(
+    json_agg(
+      DISTINCT jsonb_build_object(${sql.fromList(chunks)})
+    ), '[]'
+  )`
+}

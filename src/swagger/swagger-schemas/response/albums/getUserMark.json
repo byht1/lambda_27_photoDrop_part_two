@@ -7,7 +7,7 @@
           "albums": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/photo"
+              "$ref": "#/components/schemas/album"
             }
           }
         }
@@ -20,6 +20,14 @@
             "items": {
               "$ref": "#/components/schemas/photo"
             }
+          }
+        }
+      },
+      {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/user"
           }
         }
       }

@@ -11,6 +11,7 @@ import paginationQuery from './query/pagination.json'
 import maxPage from './global/maxPage.json'
 import album from './global/album.json'
 import photo from './global/photo.json'
+import user from './global/user.json'
 
 // HEADER
 import authToken from './header/authToken.json'
@@ -24,6 +25,7 @@ export const schemas = {
   ...maxPage,
   ...album,
   ...photo,
+  ...user,
   // BODY AND RESPONSE
   ...phoneNumber,
   ...verifyCode,

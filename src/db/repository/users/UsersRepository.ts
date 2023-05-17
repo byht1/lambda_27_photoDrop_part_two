@@ -9,8 +9,8 @@ import {
   TGetPhoneFn,
   TUpdatePrivateFn,
   TGetByIdFn,
-  TSetAvatarFn,
   TAddPurchasedPhotoFn,
+  TSetUserDataFn,
 } from './type'
 
 export class UsersRepository implements IPhotosRepository {
@@ -44,7 +44,7 @@ export class UsersRepository implements IPhotosRepository {
     return await this.updateUser(...args)
   }
 
-  setAvatar: TSetAvatarFn = async (...args) => {
+  setUserData: TSetUserDataFn = async (...args) => {
     return await this.updateUser(...args)
   }
 

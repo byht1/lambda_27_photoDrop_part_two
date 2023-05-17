@@ -6,11 +6,10 @@ import authRegenerate from './auth/regenerate.json'
 // ALBUMS
 import albums from './albums/albums.json'
 import albumById from './albums/albumById.json'
-import userMark from './albums/userMark.json'
 
 // USER
 import userSelfie from './user/selfie.json'
-import setAvatar from './user/setAvatar.json'
+import setUser from './user/setUser.json'
 
 // PAYMENT
 import payment from './payment/payment.json'
@@ -23,10 +22,9 @@ export const paths = {
   // ALBUMS
   ...albums,
   ...albumById,
-  ...userMark,
   // USER
   ...userSelfie,
-  ...setAvatar,
+  ...setUser,
   // PAYMENT
   ...payment,
 }

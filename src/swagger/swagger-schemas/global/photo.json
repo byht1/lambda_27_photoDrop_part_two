@@ -2,11 +2,11 @@
   "photo": {
     "type": "object",
     "properties": {
-      "id": {
+      "photoID": {
         "type": "string",
         "example": "b6aa1eff-6f05-4531-ab9c-12c63db20279"
       },
-      "albumId": {
+      "albumID": {
         "type": "string",
         "example": "b6aa1eff-6f05-4531-ab9c-12c63db20279"
       },
@@ -14,7 +14,7 @@
         "type": "string",
         "example": "TestAlbum200"
       },
-      "smallPhotoURL": {
+      "url": {
         "type": "string",
         "example": "https://photo-drop-ambda.s3.eu-central-1.amazonaws.com/290b3489-e22c-4f06-be85-07ca9d5d62dc/original/resized/d96fa374-a4c5-4130-abe9-0cfdfb8afcdc.png"
       },

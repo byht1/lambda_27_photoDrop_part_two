@@ -1,13 +1,19 @@
-import { TAlbums, TablePhotos, albums, photos, userPurchases } from 'db/schema'
-import { and, eq, inArray, sql } from 'drizzle-orm'
+import { TablePhotos, albums, photos, userPurchases } from 'db/schema'
+import { and, eq, inArray } from 'drizzle-orm'
 import {
   IPhotosRepository,
+  TAlbumsWithUser,
   TGetAlbumPhotosFn,
   TGetAllForAlbumsFn,
   TPhotosWithUser,
   TUserAlbumsAndPhotsFn,
 } from './type'
-import { CountPagination, SQLTernaryOperator, jsonAggBuildObject } from '../helpers'
+import {
+  CountPagination,
+  SQLTernaryOperator,
+  jsonAggBuildObject,
+  uniqJsonAggBuildObject,
+} from '../helpers'
 
 export class PhotosRepository extends CountPagination<TablePhotos> implements IPhotosRepository {
   constructor() {
@@ -21,10 +27,17 @@ export class PhotosRepository extends CountPagination<TablePhotos> implements IP
     const maxElementPromise = this.getMaxElementsCount(limit)
     const responseDBPromise = this.db
       .select({
-        id,
-        album: albums,
+        photoID: id,
+        albumID: albums.id,
+        album: {
+          albumID: albums.id,
+          owner: albums.owner,
+          name: albums.name,
+          location: albums.location,
+          createdAt: albums.createdAt,
+        },
         name,
-        smallPhotoURL: this.generateSmallPhotoURL(),
+        url: this.generateSmallPhotoURL(),
         largePhotoURL: this.generateLargePhotoURL(),
       })
       .from(this.table)
@@ -48,23 +61,31 @@ export class PhotosRepository extends CountPagination<TablePhotos> implements IP
   userAlbumsAndPhotos: TUserAlbumsAndPhotsFn = async (userId) => {
     const { people, albumId, name, id } = this.table
 
-    const albumsAndPhotos = await this.db
+    const albumsAndPhotos = this.db
       .select({
         photos: jsonAggBuildObject<TPhotosWithUser>({
-          id,
-          albumId,
+          photoID: id,
+          albumID: albumId,
           name,
-          smallPhotoURL: this.generateSmallPhotoURL(),
+          url: this.generateSmallPhotoURL(),
           largePhotoURL: this.generateLargePhotoURL(),
         }),
-        albums: sql<TAlbums[]>`COALESCE(json_agg(DISTINCT ${albums}), '[]')`,
+        albums: uniqJsonAggBuildObject<TAlbumsWithUser>({
+          albumID: albumId,
+          name,
+          url: this.generateSmallPhotoURL(),
+        }),
       })
       .from(this.table)
       .where(inArray(people, [[userId]]))
       .leftJoin(albums, eq(albums.id, albumId))
       .leftJoin(userPurchases, and(eq(id, userPurchases.photoId), eq(userPurchases.userId, userId)))
 
-    return albumsAndPhotos[0]
+    console.log(albumsAndPhotos.toSQL())
+
+    const a = await albumsAndPhotos
+
+    return a[0]
   }
 
   private generateLargePhotoURL = () => {

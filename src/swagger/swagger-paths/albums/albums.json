@@ -2,26 +2,20 @@
   "/api/albums": {
     "get": {
       "tags": ["Albums and photos"],
-      "summary": "Get all albums",
-      "description": "Get all albums list",
+      "summary": "Get all albums and photos",
+      "description": "Get all albums and photos list on which the user is marked",
       "parameters": [
         {
           "$ref": "#/components/schemas/authToken"
-        },
-        {
-          "$ref": "#/components/schemas/QueryPage"
-        },
-        {
-          "$ref": "#/components/schemas/QueryLimit"
         }
       ],
       "responses": {
         "200": {
-          "description": "Albums list",
+          "description": "Get all albums and photos list on which the user is marked",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/getAllAlbums"
+                "$ref": "#/components/schemas/getUserMark"
               }
             }
           }

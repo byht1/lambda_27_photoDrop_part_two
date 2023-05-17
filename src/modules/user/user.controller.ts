@@ -1,16 +1,11 @@
-import {
-  IUserController,
-  TBreakpointName,
-  TRegenerateAvatarRoutFn,
-  TRegenerateSelfieRoutFn,
-} from './type'
+import { IUserController, TBreakpointName, TAddSelfieRoutFn, TSetUserDataRoutFn } from './type'
 import { UserService } from './user.service'
 
 export class UserController implements IUserController {
   public breakpointName: TBreakpointName = 'user'
   private userService = new UserService()
 
-  addSelfie: TRegenerateSelfieRoutFn = async (req, res) => {
+  addSelfie: TAddSelfieRoutFn = async (req, res) => {
     const user = req.user
     if (!user) throw new Error()
     const { photos } = req.body
@@ -19,12 +14,12 @@ export class UserController implements IUserController {
     return res.json(URLs)
   }
 
-  setAvatar: TRegenerateAvatarRoutFn = async (req, res) => {
+  setUserData: TSetUserDataRoutFn = async (req, res) => {
     const user = req.user
     if (!user) throw new Error()
-    const setAvatarDto = req.body
+    const setUserDto = req.body
 
-    const userUpdateData = await this.userService.setAvatar(user.id, setAvatarDto)
-    return res.json(userUpdateData)
+    const newUserData = await this.userService.setUserData(user.id, setUserDto)
+    return res.json(newUserData)
   }
 }

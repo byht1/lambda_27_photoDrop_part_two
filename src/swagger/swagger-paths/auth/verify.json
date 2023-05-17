@@ -46,6 +46,10 @@
                     "type": "string",
                     "example": "https://photo-drop-ambda.s3.eu-central-1.amazonaws.com/290b3489-e22c-4f06-be85-07ca9d5d62dc/original/resized/d96fa374-a4c5-4130-abe9-0cfdfb8afcdc.png"
                   },
+                  "name": {
+                    "type": "string",
+                    "example": "Vitalik"
+                  },
                   "phone": {
                     "type": "string",
                     "example": "+380112223344"

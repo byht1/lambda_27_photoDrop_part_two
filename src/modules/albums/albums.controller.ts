@@ -2,7 +2,6 @@ import {
   IAlbumsController,
   TBreakpointName,
   TGerAlbumsPhotosRoutFn,
-  TGerAlbumsRoutFn,
   TGerUserAlbumsAndPhotosRoutFn,
 } from './type'
 import { AlbumsService } from './albums.service'
@@ -11,12 +10,6 @@ import { createError } from 'helpers'
 export class AlbumsController implements IAlbumsController {
   public breakpointName: TBreakpointName = 'albums'
   private albumsService = new AlbumsService()
-
-  getAlbums: TGerAlbumsRoutFn = async (req, res) => {
-    const query = req.query
-    const albums = await this.albumsService.getAlbums(query)
-    return res.json(albums)
-  }
 
   getAlbumPhotos: TGerAlbumsPhotosRoutFn = async (req, res) => {
     const { albumId } = req.params
@@ -31,8 +24,11 @@ export class AlbumsController implements IAlbumsController {
   userAlbumsAndPhotos: TGerUserAlbumsAndPhotosRoutFn = async (req, res) => {
     const user = req.user
     if (!user) throw createError(500)
-    const albums = await this.albumsService.userAlbumsAndPhotos(user.id)
+    const { id, name, avatar, phone } = user
 
-    return res.json(albums)
+    const albums = await this.albumsService.userAlbumsAndPhotos(id)
+    const response = { ...albums, user: { id, name, avatar, phone } }
+
+    return res.json(response)
   }
 }

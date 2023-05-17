@@ -15,20 +15,39 @@ export type TGetAlbumPhotosFn = (
 export type TUserAlbumsAndPhotsFn = (userId: string) => Promise<TUserAlbumsAndPhotsResponse>
 export type TGetAllForAlbumsFn = (albumId: string) => Promise<TGetAllForAlbumsResponse[]>
 
-export type TGetAlbumPhotosDBResponse = Pick<TPhotos, 'id' | 'name'> & TUrl
+export type TGetAlbumPhotosDBResponse = TUrl & {
+  albumID: string | null
+  photoID: string
+  name: string
+}
 export type TGetAlbumPhotosResponse =
   | TPaginationResponse<'photos', TGetAlbumPhotosDBResponse> & {
-      album: TAlbums | null
+      album: {
+        albumID: string
+        owner: string
+        name: string
+        location: string
+        createdAt: string
+      } | null
     }
 export type TGetAllForAlbumsResponse = { photoId: string }
 
-export type TPhotosWithUser = Pick<TPhotos, 'id' | 'name' | 'albumId'> & TUrl
+export type TPhotosWithUser = {
+  photoID: string
+  albumID: string
+  name: string
+} & TUrl
+export type TAlbumsWithUser = {
+  albumID: string
+  name: string
+  url: string
+}
 export type TUserAlbumsAndPhotsResponse = {
   photos: TPhotosWithUser[]
-  albums: TAlbums[]
+  albums: TAlbumsWithUser[]
 }
 
 type TUrl = {
-  smallPhotoURL: string
+  url: string
   largePhotoURL: string
 }
