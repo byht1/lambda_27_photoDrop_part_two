@@ -1,14 +1,15 @@
 import { TelegramBotService, TokenService, VerificationTokenService } from 'modules/lib'
 import { IAuthService, TRegenerateVerificationCodeFn, TSingInFn, TVerifyFn } from './type'
 import { UsersRepository } from 'db/repository'
-import { createError, messageError } from 'helpers'
+import { createError, getEnv, messageError } from 'helpers'
 
 export class AuthService implements IAuthService {
   constructor(
     private telegramService = new TelegramBotService(),
     private tokenService = new TokenService(),
     private verificationTokenService = new VerificationTokenService(),
-    private userModel = new UsersRepository()
+    private userModel = new UsersRepository(),
+    private limitRegeneration = getEnv('MAX_VERIFICATION_CODE_REGENERATIONS', '1')
   ) {}
 
   singIn: TSingInFn = async (phoneNumber) => {
@@ -65,7 +66,7 @@ export class AuthService implements IAuthService {
       () => this.verifyError(userId)
     )
 
-    const isMaxLimitAttemptNumber = attemptNumber < 2
+    const isMaxLimitAttemptNumber = attemptNumber < this.limitRegeneration
     if (!isMaxLimitAttemptNumber) throw createError(400, messageError.maxLimitAttemptNumber)
 
     const { token: newVerificationToken, code: newVerificationCode } =

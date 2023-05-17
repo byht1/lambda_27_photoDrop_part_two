@@ -1,23 +1,23 @@
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'
 
-import { getEnv } from 'helpers';
-import { ITokenService, TCreateTokenFn, TDecodeFn, TPayloadToken, TVerifyFn } from './type';
+import { getEnv } from 'helpers'
+import { ITokenService, TCreateTokenFn, TDecodeFn, TPayloadToken, TVerifyFn } from './type'
 
 export class TokenService implements ITokenService {
-  private tokenKey = getEnv('TOKEN_SECRET_KEY');
-  private expTime = '24h';
+  private tokenKey = getEnv('TOKEN_SECRET_KEY')
+  private expTime = getEnv('EXPIRY_TIME_ACCESS_TOKEN', '24h')
 
   createToken: TCreateTokenFn = (userId) => {
-    const payload = { id: userId };
-    const token = jwt.sign(payload, this.tokenKey, { expiresIn: this.expTime });
-    return token;
-  };
+    const payload = { id: userId }
+    const token = jwt.sign(payload, this.tokenKey, { expiresIn: this.expTime })
+    return token
+  }
 
   verify: TVerifyFn = (token) => {
-    return jwt.verify(token, this.tokenKey) as TPayloadToken;
-  };
+    return jwt.verify(token, this.tokenKey) as TPayloadToken
+  }
 
   decode: TDecodeFn = (token) => {
-    return jwt.decode(token) as TPayloadToken | null;
-  };
+    return jwt.decode(token) as TPayloadToken | null
+  }
 }

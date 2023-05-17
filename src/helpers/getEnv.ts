@@ -17,14 +17,12 @@ type TEnvKey =
   | 'AWS_S3_KEY_SECRET'
   | 'PAYMENT_SECRET_KEY'
   | 'CLIENT_URL_SERVER_ERROR'
+  | 'VERIFICATION_CODE_EXPIRY_TIME'
+  | 'EXPIRY_TIME_ACCESS_TOKEN'
 
 type ResponseGetEnv<T> = T extends ToNumberEnvKey ? number : string
 
-const envNumberToArray = [
-  'PORT',
-  'MAX_VERIFICATION_CODE_REGENERATIONS',
-  'VERIFICATION_CODE_EXPIRY_TIME',
-]
+const envNumberToArray = ['PORT', 'MAX_VERIFICATION_CODE_REGENERATIONS', ,]
 
 export const getEnv = <T extends TEnvKey | ToNumberEnvKey>(
   envKey: T,
