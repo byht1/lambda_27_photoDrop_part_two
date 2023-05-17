@@ -61,7 +61,7 @@ export class PhotosRepository extends CountPagination<TablePhotos> implements IP
   userAlbumsAndPhotos: TUserAlbumsAndPhotsFn = async (userId) => {
     const { people, albumId, name, id } = this.table
 
-    const albumsAndPhotos = this.db
+    const albumsAndPhotos = await this.db
       .select({
         photos: jsonAggBuildObject<TPhotosWithUser>({
           photoID: id,
@@ -72,7 +72,7 @@ export class PhotosRepository extends CountPagination<TablePhotos> implements IP
         }),
         albums: uniqJsonAggBuildObject<TAlbumsWithUser>({
           albumID: albumId,
-          name,
+          name: albums.name,
           url: this.generateSmallPhotoURL(),
         }),
       })
@@ -81,11 +81,22 @@ export class PhotosRepository extends CountPagination<TablePhotos> implements IP
       .leftJoin(albums, eq(albums.id, albumId))
       .leftJoin(userPurchases, and(eq(id, userPurchases.photoId), eq(userPurchases.userId, userId)))
 
-    console.log(albumsAndPhotos.toSQL())
+    const { photos, albums: albumsPhotos } = albumsAndPhotos[0]
+    const uniqAlbum = albumsPhotos.reduce<TAlbumsWithUser[]>((acc, album) => {
+      const { albumID } = album
 
-    const a = await albumsAndPhotos
+      const isUniq = acc.find((album) => album.albumID === albumID)
+      if (!isUniq) {
+        acc.push(album)
+      }
 
-    return a[0]
+      return acc
+    }, [])
+    // const uniqAlbum = Array.from(new Set(albumsPhotos.map((album) => album.albumID))).map(
+    //   (albumID) => albumsPhotos.find((album) => album.albumID === albumID)
+    // )
+
+    return { photos, albums: uniqAlbum }
   }
 
   private generateLargePhotoURL = () => {
