@@ -1,5 +1,3 @@
-import Stripe from 'stripe'
-import util from 'util'
 import {
   IPaymentController,
   TBreakpointName,
@@ -8,10 +6,6 @@ import {
 } from './type'
 import { createError, getEnv } from 'helpers'
 import { PaymentService } from './payment.service'
-
-const stripe = new Stripe(getEnv('PAYMENT_SECRET_KEY'), {
-  apiVersion: '2022-11-15',
-})
 
 export class PaymentController implements IPaymentController {
   public breakpointName: TBreakpointName = 'payment'
