@@ -24,7 +24,7 @@ export class PaymentController implements IPaymentController {
 
     const redirectUrl = await this.paymentService.createPayment(user.id, purchaseDto)
 
-    return res.redirect(303, redirectUrl)
+    return res.json(redirectUrl)
   }
 
   hookPayment: THookPaymentRoutFn = async (req) => {

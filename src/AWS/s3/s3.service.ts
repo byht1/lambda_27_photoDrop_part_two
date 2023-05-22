@@ -17,6 +17,7 @@ export class S3Service implements IS3Service {
       Bucket: this.AWS_S3_BUCKET,
       Key: pathToFile,
       Expires: 36000,
+      ACL: 'public-read',
     })
   }
 }

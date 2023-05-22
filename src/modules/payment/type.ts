@@ -10,7 +10,7 @@ export interface IPaymentController {
 
 export type TCreatePaymentRoutFn = (
   req: Req<void, TPurchaseDto>,
-  res: Res<void>,
+  res: Res<string>,
   next?: Next
 ) => Promise<any>
 export type THookPaymentRoutFn = (

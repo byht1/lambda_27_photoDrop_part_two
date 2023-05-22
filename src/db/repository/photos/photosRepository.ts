@@ -5,6 +5,7 @@ import {
   TAlbumsWithUser,
   TGetAlbumPhotosFn,
   TGetAllForAlbumsFn,
+  TGetByIdFn,
   TPhotosWithUser,
   TUserAlbumsAndPhotsFn,
 } from './type'
@@ -97,6 +98,26 @@ export class PhotosRepository extends CountPagination<TablePhotos> implements IP
     // )
 
     return { photos, albums: uniqAlbum }
+  }
+
+  getById: TGetByIdFn = async (searchPhotoId, searchUserId) => {
+    const { id, name, albumId } = this.table
+    const photo = await this.db
+      .select({
+        photoID: id,
+        albumID: albumId,
+        name,
+        url: this.generateSmallPhotoURL(),
+        largePhotoURL: this.generateLargePhotoURL(),
+      })
+      .from(this.table)
+      .where(eq(id, searchPhotoId))
+      .leftJoin(
+        userPurchases,
+        and(eq(id, userPurchases.photoId), eq(userPurchases.userId, searchUserId))
+      )
+
+    return photo[0]
   }
 
   private generateLargePhotoURL = () => {

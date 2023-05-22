@@ -1,0 +1,35 @@
+{
+  "/api/albums/photos/${photoId}": {
+    "get": {
+      "tags": ["Albums and photos"],
+      "summary": "Get photo",
+      "description": "Get photo",
+      "parameters": [
+        {
+          "$ref": "#/components/schemas/authToken"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "One photo",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/photo"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Server error"
+        },
+        "403": {
+          "description": "Forbidden"
+        },
+        "400": {
+          "description": "Bad request"
+        }
+      }
+    }
+  }
+}

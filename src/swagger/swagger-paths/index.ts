@@ -6,6 +6,7 @@ import authRegenerate from './auth/regenerate.json'
 // ALBUMS
 import albums from './albums/albums.json'
 import albumById from './albums/albumById.json'
+import photo from './albums/photo.json'
 
 // USER
 import userSelfie from './user/selfie.json'
@@ -22,6 +23,7 @@ export const paths = {
   // ALBUMS
   ...albums,
   ...albumById,
+  ...photo,
   // USER
   ...userSelfie,
   ...setUser,

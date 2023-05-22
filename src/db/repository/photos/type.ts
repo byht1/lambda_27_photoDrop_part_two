@@ -1,10 +1,10 @@
-import { TAlbums, TPhotos } from 'db/schema'
 import { TPaginationParams, TPaginationResponse } from '../helpers'
 
 export interface IPhotosRepository {
   getAlbumPhotos: TGetAlbumPhotosFn
   userAlbumsAndPhotos: TUserAlbumsAndPhotsFn
   getAllForAlbums: TGetAllForAlbumsFn
+  getById: TGetByIdFn
 }
 
 export type TGetAlbumPhotosFn = (
@@ -14,6 +14,10 @@ export type TGetAlbumPhotosFn = (
 ) => Promise<TGetAlbumPhotosResponse>
 export type TUserAlbumsAndPhotsFn = (userId: string) => Promise<TUserAlbumsAndPhotsResponse>
 export type TGetAllForAlbumsFn = (albumId: string) => Promise<TGetAllForAlbumsResponse[]>
+export type TGetByIdFn = (
+  photoId: string,
+  userId: string
+) => Promise<TGetAlbumPhotosDBResponse | undefined>
 
 export type TGetAlbumPhotosDBResponse = TUrl & {
   albumID: string | null
