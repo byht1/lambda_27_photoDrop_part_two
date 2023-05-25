@@ -16,6 +16,10 @@
           "schema": {
             "type": "object",
             "properties": {
+              "phoneNumber": {
+                "type": "string",
+                "example": "+380675468245"
+              },
               "name": {
                 "type": "string",
                 "example": "VItalik"
