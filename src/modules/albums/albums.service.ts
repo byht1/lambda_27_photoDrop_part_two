@@ -18,8 +18,8 @@ export class AlbumsService implements IAlbumsService {
     return photos
   }
 
-  userAlbumsAndPhotos: TGetUserAlbumsAndPhotosFn = async (userId) => {
-    const albums = await this.photosModel.userAlbumsAndPhotos(userId)
+  userAlbumsAndPhotos: TGetUserAlbumsAndPhotosFn = async (...args) => {
+    const albums = await this.photosModel.userAlbumsAndPhotos(...args)
     return albums
   }
 

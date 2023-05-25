@@ -12,7 +12,10 @@ export type TGetAlbumPhotosFn = (
   userId: string,
   params: TPaginationParams
 ) => Promise<TGetAlbumPhotosResponse>
-export type TUserAlbumsAndPhotsFn = (userId: string) => Promise<TUserAlbumsAndPhotsResponse>
+export type TUserAlbumsAndPhotsFn = (
+  userPhone: string,
+  userId: string
+) => Promise<TUserAlbumsAndPhotsResponse>
 export type TGetAllForAlbumsFn = (albumId: string) => Promise<TGetAllForAlbumsResponse[]>
 export type TGetByIdFn = (
   photoId: string,
@@ -47,7 +50,7 @@ export type TAlbumsWithUser = {
   url: string
 }
 export type TUserAlbumsAndPhotsResponse = {
-  photos: TPhotosWithUser[]
+  allPhotos: TPhotosWithUser[]
   albums: TAlbumsWithUser[]
 }
 

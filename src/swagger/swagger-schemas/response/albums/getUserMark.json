@@ -15,7 +15,7 @@
       {
         "type": "object",
         "properties": {
-          "photos": {
+          "allPhotos": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/photo"

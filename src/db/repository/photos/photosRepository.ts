@@ -59,7 +59,7 @@ export class PhotosRepository extends CountPagination<TablePhotos> implements IP
     return { maxPage, photos, album }
   }
 
-  userAlbumsAndPhotos: TUserAlbumsAndPhotsFn = async (userId) => {
+  userAlbumsAndPhotos: TUserAlbumsAndPhotsFn = async (userPhone, userId) => {
     const { people, albumId, name, id } = this.table
 
     const albumsAndPhotos = await this.db
@@ -78,7 +78,7 @@ export class PhotosRepository extends CountPagination<TablePhotos> implements IP
         }),
       })
       .from(this.table)
-      .where(inArray(people, [[userId]]))
+      .where(inArray(people, [[userPhone]]))
       .leftJoin(albums, eq(albums.id, albumId))
       .leftJoin(userPurchases, and(eq(id, userPurchases.photoId), eq(userPurchases.userId, userId)))
 
@@ -97,7 +97,7 @@ export class PhotosRepository extends CountPagination<TablePhotos> implements IP
     //   (albumID) => albumsPhotos.find((album) => album.albumID === albumID)
     // )
 
-    return { photos, albums: uniqAlbum }
+    return { allPhotos: photos, albums: uniqAlbum }
   }
 
   getById: TGetByIdFn = async (searchPhotoId, searchUserId) => {

@@ -39,7 +39,10 @@ export type TGerAlbumsPhotosFn = (
   userId: string,
   query: TPaginationQueryParams
 ) => Promise<TGetAlbumPhotosResponse>
-export type TGetUserAlbumsAndPhotosFn = (userId: string) => Promise<TUserAlbumsAndPhotsResponse>
+export type TGetUserAlbumsAndPhotosFn = (
+  userPhone: string,
+  userId: string
+) => Promise<TUserAlbumsAndPhotsResponse>
 export type TGetPhotoByIdFn = (
   photoId: string,
   userId: string

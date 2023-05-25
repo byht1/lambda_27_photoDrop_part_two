@@ -27,7 +27,7 @@ export class AlbumsController implements IAlbumsController {
     if (!user) throw createError(500)
     const { id, name, avatar, phone } = user
 
-    const albums = await this.albumsService.userAlbumsAndPhotos(id)
+    const albums = await this.albumsService.userAlbumsAndPhotos(phone, id)
     const response = { ...albums, user: { id, name, avatar, phone } }
 
     return res.json(response)
