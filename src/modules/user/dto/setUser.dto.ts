@@ -1,14 +1,11 @@
 import { phoneNumberValidate } from 'modules/dto/phoneNumberValidate'
-import { z } from 'zod'
-
-export type TSetUserDto = {
-  phoneNumber?: string
-  avatar?: string
-  name?: string
-}
+import { TypeOf, z } from 'zod'
 
 export const setUserDto = z.object({
-  phoneNumber: phoneNumberValidate,
+  phoneNumber: phoneNumberValidate.optional(),
   avatar: z.string().optional(),
   name: z.string().optional(),
+  email: z.string().email().optional(),
 })
+
+export type TSetUserDto = TypeOf<typeof setUserDto>

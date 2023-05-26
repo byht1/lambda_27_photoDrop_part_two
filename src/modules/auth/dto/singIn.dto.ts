@@ -1,10 +1,8 @@
 import { phoneNumberValidate } from 'modules/dto/phoneNumberValidate'
-import { z } from 'zod'
-
-export type TSingInDto = {
-  phoneNumber: string
-}
+import { TypeOf, z } from 'zod'
 
 export const singInDto = z.object({
   phoneNumber: phoneNumberValidate,
 })
+
+export type TSingInDto = TypeOf<typeof singInDto>

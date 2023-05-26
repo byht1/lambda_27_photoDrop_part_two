@@ -7,6 +7,7 @@ export const users = pgTable(
     id: uuid('id').defaultRandom().primaryKey(),
     phone: varchar('phone', { length: 15 }).notNull(),
     name: varchar('name', { length: 50 }),
+    email: varchar('email', { length: 50 }),
     token: varchar('token'),
     verificationToken: varchar('verification_token'),
     avatar: varchar('avatar'),

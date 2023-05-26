@@ -30,4 +30,6 @@ app.use((err: INewError, req: Req, res: Res<any>, next: Next) => {
   res.status(status).json({ message })
 })
 
-app.listen(PORT, () => {})
+app.listen(PORT, () => {
+  console.log(`Server start http://localhost:${PORT}\nDOCS: http://localhost:${PORT}/docs`)
+})

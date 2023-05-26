@@ -1,5 +1,5 @@
 import { InferModel } from 'drizzle-orm'
-import { pgTable, uuid, varchar } from 'drizzle-orm/pg-core'
+import { integer, pgTable, uuid, varchar } from 'drizzle-orm/pg-core'
 import { photographers } from './photographers.schema'
 
 export const albums = pgTable('albums', {
@@ -8,6 +8,7 @@ export const albums = pgTable('albums', {
     .notNull()
     .references(() => photographers.id),
   name: varchar('first_name', { length: 50 }).notNull(),
+  counterPhoto: integer('counter_photo').notNull().default(0),
   location: varchar('location', { length: 250 }).notNull(),
   createdAt: varchar('created_at', { length: 25 }).notNull(),
 })

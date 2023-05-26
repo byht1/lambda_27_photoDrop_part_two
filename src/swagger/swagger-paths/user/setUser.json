@@ -22,7 +22,11 @@
               },
               "name": {
                 "type": "string",
-                "example": "VItalik"
+                "example": "Vitalik"
+              },
+              "email": {
+                "type": "string",
+                "example": "lambda@gmail.com"
               },
               "avatar": {
                 "type": "string",
@@ -51,6 +55,10 @@
                   "name": {
                     "type": "string",
                     "example": "Vitalik"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "lambda@gmail.com"
                   },
                   "phone": {
                     "type": "string",

@@ -17,8 +17,8 @@ export class UserService implements IUserService {
   }
 
   setUserData: TSetUserDataFn = async (...args) => {
-    const { id, name, phone, avatar } = await this.userModel.setUserData(...args)
+    const { id, name, phone, avatar, email } = await this.userModel.setUserData(...args)
 
-    return { id, name, phone, avatar }
+    return { id, name, phone, avatar, email }
   }
 }

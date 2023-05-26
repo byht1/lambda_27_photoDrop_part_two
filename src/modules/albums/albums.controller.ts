@@ -25,10 +25,10 @@ export class AlbumsController implements IAlbumsController {
   userAlbumsAndPhotos: TGerUserAlbumsAndPhotosRoutFn = async (req, res) => {
     const user = req.user
     if (!user) throw createError(500)
-    const { id, name, avatar, phone } = user
+    const { id, name, avatar, phone, email } = user
 
     const albums = await this.albumsService.userAlbumsAndPhotos(phone, id)
-    const response = { ...albums, user: { id, name, avatar, phone } }
+    const response = { ...albums, user: { id, name, avatar, phone, email } }
 
     return res.json(response)
   }

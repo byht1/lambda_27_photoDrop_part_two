@@ -1,11 +1,6 @@
-import { z } from 'zod';
-import validator from 'validator';
-import { validateMessage } from 'helpers';
-
-export type TVerifyDto = {
-  phoneNumber: string;
-  code: string;
-};
+import { TypeOf, z } from 'zod'
+import validator from 'validator'
+import { validateMessage } from 'helpers'
 
 export const verifyDto = z.object({
   phoneNumber: z.string().refine(
@@ -23,4 +18,6 @@ export const verifyDto = z.object({
         message: validateMessage.isNumeric,
       })
     ),
-});
+})
+
+export type TVerifyDto = TypeOf<typeof verifyDto>
