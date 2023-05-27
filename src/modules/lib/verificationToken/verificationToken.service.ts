@@ -20,10 +20,12 @@ export class VerificationTokenService implements IVerificationTokenService {
   }
 
   verify: TVerifyFn = async (token, errorFn) => {
+    console.log('🚀  VerificationTokenService  token:', token)
     try {
       const payload = jwt.verify(token, this.tokenKey) as TPayloadVerificationToken
       return payload
     } catch (error) {
+      console.log('🚀  VerificationTokenService  error:', error)
       if (errorFn) await errorFn()
       throw createError(403, messageError.invalidVerificationCodeTime)
     }
