@@ -9,7 +9,7 @@ export class UserService implements IUserService {
   addSelfie: TAddSelfieFn = async (files, userId) => {
     const URLs = files.map((filename, i) => {
       const [expansion] = filename.split('.').reverse()
-      const path = `${i + 1}_${userId}.${expansion}`
+      const path = `selfie/temp/${i + 1}_${userId}.${expansion}`
       return this.s3Service.generatePresignedUrl(path)
     })
 
