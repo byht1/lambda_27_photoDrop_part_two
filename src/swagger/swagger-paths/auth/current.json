@@ -1,0 +1,32 @@
+{
+  "/api/auth/current": {
+    "get": {
+      "tags": ["Auth"],
+      "summary": "Get data about the current user",
+      "description": "Get data about the current user using a token",
+      "parameters": [
+        {
+          "$ref": "#/components/schemas/authToken"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "User data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/user"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Server error"
+        },
+        "400": {
+          "description": "Bad request"
+        }
+      }
+    }
+  }
+}

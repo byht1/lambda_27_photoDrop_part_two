@@ -7,11 +7,13 @@ export interface IAuthController {
   singIn: TSingInRoutFn
   verify: TVerifyRoutFn
   regenerateVerificationCode: TRegenerateVerificationCodeRoutFn
+  current: TCurrentRoutFn
 }
 
 export type TSingInRoutFn = TRouterFn<string, TSingInDto>
 export type TVerifyRoutFn = TRouterFn<TUserResponse, TVerifyDto>
 export type TRegenerateVerificationCodeRoutFn = TRouterFn<string, TSingInDto>
+export type TCurrentRoutFn = TRouterFn<TCurrentUserResponse, void>
 
 export type TBreakpointName = 'auth'
 
@@ -27,3 +29,4 @@ export type TVerifyFn = (bodyRequest: TVerifyDto) => Promise<TUserResponse>
 export type TRegenerateVerificationCodeFn = (phoneNumber: string) => Promise<string>
 
 type TUserResponse = Pick<TUsers, 'id' | 'avatar' | 'token' | 'phone' | 'name' | 'email'>
+type TCurrentUserResponse = Pick<TUsers, 'id' | 'avatar' | 'phone' | 'name' | 'email'>

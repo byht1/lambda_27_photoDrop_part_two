@@ -2,6 +2,7 @@
 import authSingIn from './auth/singIn.json'
 import authVerify from './auth/verify.json'
 import authRegenerate from './auth/regenerate.json'
+import authCurrent from './auth/current.json'
 
 // ALBUMS
 import albums from './albums/albums.json'
@@ -20,6 +21,7 @@ export const paths = {
   ...authSingIn,
   ...authVerify,
   ...authRegenerate,
+  ...authCurrent,
   // ALBUMS
   ...albums,
   ...albumById,
