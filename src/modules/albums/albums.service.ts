@@ -1,4 +1,4 @@
-import { AlbumsRepository, PhotosRepository } from 'db/repository'
+import { PhotosRepository } from 'db/repository'
 import {
   IAlbumsService,
   TGerAlbumsPhotosFn,
@@ -10,7 +10,6 @@ import { createError } from 'helpers'
 
 export class AlbumsService implements IAlbumsService {
   private photosModel = new PhotosRepository()
-  private albumsModel = new AlbumsRepository()
 
   getAlbumPhotos: TGerAlbumsPhotosFn = async (albumId, userId, queryParams) => {
     const pagination = formatQueryParams(queryParams)

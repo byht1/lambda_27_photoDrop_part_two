@@ -35,6 +35,7 @@ export type TGetAlbumPhotosResponse =
         name: string
         location: string
         createdAt: string
+        isPaid: boolean
       } | null
     }
 export type TGetAllForAlbumsResponse = { photoId: string }
@@ -48,6 +49,9 @@ export type TAlbumsWithUser = {
   albumID: string
   name: string
   url: string
+  location: string
+  createdAt: string
+  isPaid: boolean
 }
 export type TUserAlbumsAndPhotsResponse = {
   allPhotos: TPhotosWithUser[]

@@ -12,6 +12,7 @@ import {
 import {
   CountPagination,
   SQLTernaryOperator,
+  SQLTernaryOperatorIsBoolean,
   jsonAggBuildObject,
   uniqJsonAggBuildObject,
 } from '../helpers'
@@ -36,6 +37,7 @@ export class PhotosRepository extends CountPagination<TablePhotos> implements IP
           name: albums.name,
           location: albums.location,
           createdAt: albums.createdAt,
+          isPaid: SQLTernaryOperatorIsBoolean(userPurchases.photoId),
         },
         name,
         url: this.generateSmallPhotoURL(),
@@ -75,6 +77,9 @@ export class PhotosRepository extends CountPagination<TablePhotos> implements IP
           albumID: albumId,
           name: albums.name,
           url: this.generateSmallPhotoURL(),
+          createdAt: albums.createdAt,
+          location: albums.location,
+          isPaid: SQLTernaryOperatorIsBoolean(userPurchases.photoId),
         }),
       })
       .from(this.table)
