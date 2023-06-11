@@ -3,6 +3,7 @@ import { IUserService, TAddSelfieFn, TSetUserDataFn } from './type'
 import { UsersRepository } from 'db/repository'
 import { TelegramBotService, VerificationTokenService } from 'modules/lib'
 import { TUpdateData } from 'db/repository/users/type'
+import { createError } from 'helpers'
 
 export class UserService implements IUserService {
   private s3Service = new S3Service()
@@ -23,8 +24,12 @@ export class UserService implements IUserService {
   setUserData: TSetUserDataFn = async (userId, { phoneNumber, ...params }) => {
     const newParamsObj: Partial<TUpdateData> = { ...params }
     if (phoneNumber) {
+      const isUser = await this.userModel.getPhone(phoneNumber)
+
+      if (isUser) throw createError(401, 'The phone number is already in use')
+
       const { token: verificationToken, code: verificationCode } =
-        this.verificationTokenService.createToken(1)
+        this.verificationTokenService.createToken(1, { phone: phoneNumber })
 
       await this.telegramService.sendVerificationCode(phoneNumber, verificationCode)
 

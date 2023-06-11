@@ -39,22 +39,24 @@ export class AuthService implements IAuthService {
     const { code: verificationCode, phone: newPhoneNumber } =
       await this.verificationTokenService.verify(verificationToken, () => this.verifyError(userId))
 
-    if (newPhoneNumber) {
-      await this.userModel.setUserData(userId, { phone: newPhoneNumber })
-
-      return { id: userId, token: '', avatar, phone: newPhoneNumber, name, email }
-    }
-
     const verifyCode = +code === verificationCode
     if (!verifyCode) throw createError(403, messageError.invalidVerificationCode)
 
     const token = this.tokenService.createToken(userId)
-    await this.userModel.updateToken(userId, {
+    await this.userModel.setUserData(userId, {
       token,
       verificationToken: null,
+      ...(newPhoneNumber ? { phone: newPhoneNumber } : {}),
     })
 
-    return { id: userId, token, avatar, phone, name, email }
+    return {
+      id: userId,
+      token,
+      avatar,
+      phone: newPhoneNumber ? newPhoneNumber : phone,
+      name,
+      email,
+    }
   }
 
   regenerateVerificationCode: TRegenerateVerificationCodeFn = async (phoneNumber) => {
