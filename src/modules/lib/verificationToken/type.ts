@@ -1,14 +1,18 @@
 export interface IVerificationTokenService {
-  createToken: TCreateTokenFn;
-  verify: TVerifyFn;
-  decode: TDecodeFn;
+  createToken: TCreateTokenFn
+  verify: TVerifyFn
+  decode: TDecodeFn
 }
 
-export type TCreateTokenFn = (attemptNumber: number) => { token: string; code: number };
+export type TCreateTokenFn = (
+  attemptNumber: number,
+  isNewPhone?: TNewPhone
+) => { token: string; code: number }
 export type TVerifyFn = (
   token: string,
   errorFn?: () => Promise<void>
-) => Promise<TPayloadVerificationToken>;
-export type TDecodeFn = (token: string) => TPayloadVerificationToken | null;
+) => Promise<TPayloadVerificationToken>
+export type TDecodeFn = (token: string) => TPayloadVerificationToken | null
 
-export type TPayloadVerificationToken = { code: number; attemptNumber: number };
+export type TPayloadVerificationToken = { code: number; attemptNumber: number; phone?: string }
+type TNewPhone = { phone: string }

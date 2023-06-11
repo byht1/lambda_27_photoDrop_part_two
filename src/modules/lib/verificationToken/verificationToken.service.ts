@@ -12,9 +12,9 @@ export class VerificationTokenService implements IVerificationTokenService {
   private tokenKey = getEnv('TOKEN_SECRET_KEY')
   private expTime = getEnv('VERIFICATION_CODE_EXPIRY_TIME', '3m')
 
-  createToken: TCreateTokenFn = (attemptNumber) => {
+  createToken: TCreateTokenFn = (attemptNumber, isNewPhone) => {
     const code = this.generateVerificationCode()
-    const payload: TPayloadVerificationToken = { code, attemptNumber }
+    const payload: TPayloadVerificationToken = { code, attemptNumber, ...isNewPhone }
     const token = jwt.sign(payload, this.tokenKey, { expiresIn: this.expTime })
     return { token, code }
   }

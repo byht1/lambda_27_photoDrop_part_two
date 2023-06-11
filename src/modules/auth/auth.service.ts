@@ -36,10 +36,14 @@ export class AuthService implements IAuthService {
 
     if (!verificationToken) throw createError(403, messageError.invalidVerificationCode)
 
-    const { code: verificationCode } = await this.verificationTokenService.verify(
-      verificationToken,
-      () => this.verifyError(userId)
-    )
+    const { code: verificationCode, phone: newPhoneNumber } =
+      await this.verificationTokenService.verify(verificationToken, () => this.verifyError(userId))
+
+    if (newPhoneNumber) {
+      await this.userModel.setUserData(userId, { phone: newPhoneNumber })
+
+      return { id: userId, token: '', avatar, phone: newPhoneNumber, name, email }
+    }
 
     const verifyCode = +code === verificationCode
     if (!verifyCode) throw createError(403, messageError.invalidVerificationCode)
