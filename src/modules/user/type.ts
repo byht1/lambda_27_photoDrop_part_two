@@ -21,8 +21,6 @@ export type TBreakpointName = 'user'
 export interface IUserService {
   addSelfie: TAddSelfieFn
   setUserData: TSetUserDataFn
-  // setAvatar: TSetAvatarFn
-  // setName: TSetNameFn
 }
 
 export type TAddSelfieFn = (files: string[], userId: string) => Promise<S3.PresignedPost[]>
