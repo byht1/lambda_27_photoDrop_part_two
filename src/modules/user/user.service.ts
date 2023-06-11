@@ -26,7 +26,7 @@ export class UserService implements IUserService {
     if (phoneNumber) {
       const isUser = await this.userModel.getPhone(phoneNumber)
 
-      if (isUser) throw createError(401, 'The phone number is already in use')
+      if (isUser) throw createError(400, 'The phone number is already in use')
 
       const { token: verificationToken, code: verificationCode } =
         this.verificationTokenService.createToken(1, { phone: phoneNumber })
