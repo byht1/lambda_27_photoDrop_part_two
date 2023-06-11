@@ -1,6 +1,7 @@
 import { TUsers } from 'db/schema'
 import { TAddPhotosDto, TSetUserDto } from './dto'
 import { S3 } from 'aws-sdk'
+import { TUpdateData } from 'db/repository/users/type'
 
 // CONTROLLER __________________
 export interface IUserController {
@@ -26,5 +27,6 @@ export interface IUserService {
 
 export type TAddSelfieFn = (files: string[], userId: string) => Promise<S3.PresignedPost[]>
 export type TSetUserDataFn = (userId: string, userDto: TSetUserDto) => Promise<TUserNewDataResponse>
+export type TNewUserPhoneFn = (userDto: TSetUserDto) => Promise<Partial<TUpdateData>>
 
 type TUserNewDataResponse = Omit<TUsers, 'token' | 'verificationToken'>
